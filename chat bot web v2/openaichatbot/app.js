@@ -1,3 +1,23 @@
+const openai = require('openai');
+require('dotenv').config();
+const express = require('express');
+const path = require('path');
+const app = express();
+
+const port = 8080 || process.env.PORT
+
+app.use(express.json());
+app.use(express.static('public'));
+app.use(express.urlencoded({extended: true}));
+
+const configuration = new openai.Configuration({
+    apiKey: process.env.OPENAI_API_KEY,
+    organization: process.env.OPENAI_ORG
+})
+const openaiapi = new openai.OpenAIApi(configuration) ;
+
+
+
 //creating some routes for the server
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'));
